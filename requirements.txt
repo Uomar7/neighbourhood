@@ -6,6 +6,7 @@ Django==1.11.8
 django-bootstrap4==0.0.8
 django-heroku==0.3.1
 django-registration==2.4.1
+djangorestframework==3.9.4
 gunicorn==19.9.0
 Pillow==5.2.0
 psycopg2==2.7.5
@@ -14,4 +15,3 @@ pycodestyle==2.5.0
 python-decouple==3.1
 pytz==2019.1
 whitenoise==4.1.2
-# django-tinymce==2.8.0
