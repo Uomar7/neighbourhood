@@ -38,7 +38,7 @@ class Rate(models.Model):
     usability = models.IntegerField()
     content = models.IntegerField()
     design = models.IntegerField()
-    projects = models.ForeignKey(Project, on_delete=models.CASCADE, related_name=rates)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name=rates)
     voter = models.ForeignKey(User,on_delete=models.CASCADE)
 
 
