@@ -23,10 +23,31 @@ class Project(models.Model):
     posted = models.DateTimeField(auto_now_add=True)
     # new column comments added below 
 
+    def __str__(self):
+        return self.title
+
 class Comment(models.Model):
     review = models.CharField(max_length = 400)
     project = models.ForeignKey(Project,on_delete=models.CASCADE,related_name='comments', related_query_name=comment) #automatically adds a new column on the project class called comments
     posted_by = models.ForeignKey(User,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.review
+
 class Rate(models.Model):
-    # usability = models.IntegerField
+    usability = models.IntegerField()
+    content = models.IntegerField()
+    design = models.IntegerField()
+    projects = models.ForeignKey(Project, on_delete=models.CASCADE, related_name=rates)
+    voter = models.ForeignKey(User,on_delete=models.CASCADE)
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(username=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
