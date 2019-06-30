@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 import os
-import django-heroku
+import django_heroku
 import dj_database_url
 from decouple import config, Csv
 
@@ -41,17 +41,17 @@ else:
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS=config('ALLOWED_HOSTS', cast=Csv())
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o8k4xv3ztyz)9*^(eif*^*b_135(pn98_8^7-e&u+e46rspc@5'
+SECRET_KEY='wxb3nt0oko=l=m#w64k62rn9ti399+-gev@r*jcfmc64hrlrwm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG=True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS=[]
 
 
 # Application definition
