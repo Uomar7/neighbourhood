@@ -26,10 +26,8 @@ class Project(models.Model):
     # new column comments added below
     # new column called usabilityrate
 
-
     def __str__(self):
         return self.title
-
 
 class Comment(models.Model):
     review = models.CharField(max_length=400)# automatically adds a new column on the project class called comments

@@ -1,0 +1,84 @@
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+{% block styles%}
+{% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/navbar.css'%}">
+<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Leckerli+One|Merienda|Oleo+Script&display=swap"
+    rel="stylesheet">
+{% endblock %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'home'%}">InstaRep</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li>
+                <a class="nav-link" href="/accounts/password/change">Change Password</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li> -->
+            {% else%}
+            <li class="nav-item">
+                <a href="/accounts/login">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+        <form class="form-inline my-2 my-lg-0" role="search" action="#">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="users" aria-label="Search">
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="glyphicon glyphicon-search"></i></button> -->
+        </form>
+    </div>
+</nav>
+
+
+<!-- <nav class="navbar navbar-light bg-light"> -->
+<!-- <h3><a href="{% url 'home' %}" class="navbar-brand"> kinGram</a></h3> -->
+<!-- {% if user.is_authenticated %} -->
+<!-- <ul> -->
+<!-- <li><a href="{% url 'profile' request.user.id %}">Profile</a></li> -->
+<!-- <li><a href="/logout">Logout</a></li> -->
+<!-- <li> -->
+<!-- <form method="post"> -->
+<!-- <input type="text" class="form-control-sm" aria-describedby="emailHelp" placeholder="search"> -->
+<!-- <small id="emailHelp" class="form-text text-muted">Search by username</small> -->
+
+<!-- </form> -->
+<!-- </li> -->
+<!-- </ul> -->
+<!-- {% else %} -->
+<!-- <li> -->
+<!-- <a href="/accounts/login">Login</a> -->
+<!-- </li> -->
+<!-- {% endif%} -->
+<!-- </nav> -->
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% bootstrap_javascript %}
+{% endblock %}

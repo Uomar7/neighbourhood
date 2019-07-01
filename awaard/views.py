@@ -10,5 +10,7 @@ from django.contrib.auth.models import User
 @login_required(login_url='/accounts/login/')
 def landing_page(request):
     projects = Project.objects.all()
-    project_comments = Project.objects.get(pk = id)
-    all_comments = project_comments.comments.all()
+    # project_comments = Project.objects.get(pk = id)
+    # all_comments = project_comments.comments.all()
+    return render(request, 'all-temps/index.html',{"projects":projects})
+
