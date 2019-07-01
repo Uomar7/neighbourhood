@@ -21,12 +21,13 @@ def landing_page(request):
 
 @login_required(login_url='/accounts/login/')
 def new_project(request):
-    pass
-    current_user = request.user
+
+    current_user =Profile.objects.get(username=request.user)
     if request.method == "POST":
         form = ProjectForm(request.POST,request.FILES)
         if form.is_valid():
             proj = form.save(commit=False)
+            # proj.user = current_user
             proj.profile = current_user
             proj.save()
         
@@ -46,9 +47,19 @@ def profile(request,id):
 
 @transaction.atomic
 def edit_profile(request):
-    current_user = request.user
+    current_user = Profile.objects.get(username = request.user)
 
-    return render(request, "all-temps/edit_profile.html")
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance = current_user)
+        if form.is_valid():
+            form.save()
+
+            return redirect('profile',current_user.id)
+    
+    else:
+        form = ProfileForm(instance = request.user.profile)
+
+    return render(request, "all-temps/edit_profile.html", {"form":form})
 
 
 

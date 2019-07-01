@@ -6,16 +6,16 @@
 {% block content %}
 
 {% if projects %}
-{% for project in projects %}
-<div class="container-fluid">
+<div class="container-fluid" style="font-family: 'Leckerli One', cursive;">
     <div class="row">
+            {% for project in projects %}
         <div class="col-md-3">
             <!-- Card Light -->
             <div class="card">
 
                 <!-- Card image -->
                 <div class="view overlay">
-                    <img class="card-img-top"
+                    <img class="card-img-top" height="250 !important" width="auto"
                         src="{{ project.project_image.url }}"
                         alt="Card image cap">
                     <a>
@@ -45,11 +45,11 @@
             </div>
             <!-- Card Light -->
         </div>
+        {% empty %}
+        <h3 class="text-center">There Are No Posted Projects</h3>
+        {% endfor %}
     </div>
 </div>
-{% empty %}
-<h3 class="text-center">There Are No Posted Projects</h3>
-{% endfor %}
 {% endif%}
 {% endblock %}
 {% block scripts %} {{block.super}}
