@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import ProfileSerializer,ProjectSerializer,CommentSerializer
 from django.http import JsonResponse
+from rest_framework import status
 
 # @login_required(login_url='/accounts/login/')
 def landing_page(request):
@@ -84,17 +85,27 @@ def single_project(request, project_id):
     #         comment.save()    
     return render(request, "all-temps/project.html",{"project":project,"form":form,"comments":comments})
 
-def user_comment(request,project_id):
-    review = request.POST.get('review')
-    posted_by = request.user
-    project = Project.objects.get(id = project_id)
+def user_comment(request):
+    if request.method == 'POST':
+        comment_text = request.POST.get('the_post')
+        print(comment_text)
+        response_data = {}
 
-    comment = Comment(review=review,posted_by=posted_by,project=project)
-    comment.save()
-    data = {'success':'You Have Successfully Reviewed The Project'}
-    return JsonResponse(data)
+        comment = Comment(review=comment_text, posted_by=request.user)
+        comment.save()
+        response_data['pk'] = comment.pk
+        response_data['review'] = comment.review
+        response_data['posted_by'] = comment.posted_by
 
-
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type = 'application/json'
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to seee":"Nothing is happening"}),
+            content_type = 'application/json'
+        )
 
 # Models APIView
 class ProjectList(APIView):

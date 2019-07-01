@@ -42,7 +42,6 @@ class Project(models.Model):
     title = models.CharField(max_length=100)
     project_image = models.ImageField(upload_to='images/')
     project_description = models.TextField()
-    # user = models.ForeignKey(User,on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="projects")
     link = models.URLField()
     posted = models.DateTimeField(auto_now_add=True)

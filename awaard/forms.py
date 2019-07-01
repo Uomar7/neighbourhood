@@ -18,7 +18,15 @@ class ProjectForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ['posted_by', 'project']
+        # exclude = ['posted_by', 'project']
+        fields = ['review']
+        widget = {
+            'review': forms.TextInput(attrs={
+                'id': 'comment-text',
+                'required': True,
+                'placeholder': 'Write Your Remark'
+            })
+        }
 
 
 class UsabilityRateForm(forms.ModelForm):

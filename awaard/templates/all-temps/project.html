@@ -24,7 +24,7 @@
         <hr>
     </div>
     <hr>
-    <form action="{% url 'single_project' project.id%}" method="post">
+    <form action="{% url 'single_project' project.id%}" id="form" method="post">
         {% csrf_token%}
         {%bootstrap_form form layout='inline'%}
         <input type="submit" class="btn btn-success btn-sm" value="Comment">
