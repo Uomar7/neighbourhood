@@ -13,14 +13,14 @@
         {% if profile %}
 
         <div class="row">
+            {% if profile.profile_pic %}
             <div class="col-md-4">
-                {% if profile.profile_pic %}
                 <img src="{{ profile.profile_pic.url }}" width="210px" height="210px" class="img-thumbnail" alt="">
+            </div>
                 {% else %}
                 <img src="data:image/png;base64,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"
                     alt="">
                 {% endif%}
-            </div>
 
             <div class="col-md-8">
                 <h3>Username: {{ profile.username }}</h3>
@@ -34,6 +34,7 @@
                 
             </div>
         </div>
+        <br>
         {% endif %}
 
         
@@ -64,14 +65,16 @@
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p> -->
                         <!-- Link -->
-                        <a href="#!" class="black-text d-flex justify-content-end">
+                        <a href="/project/{{project.id}}" class="black-text d-flex justify-content-end">
                             <h5>Rate Project <i class="fas fa-angle-double-right"></i></h5>
                         </a>
 
                     </div>
 
                 </div>
-            </div>
+            </div> 
+            <br>
+            <hr>
 
             {% empty %}
             <p> No Projects Posted </p>

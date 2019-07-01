@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block styles%}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+<div class="container" style="font-family: 'Leckerli One', cursive;">
+    <div class="row" style="font-family: 'Leckerli One', cursive;">
+        <img src="{{ project.project_image.url }}" class="img-thumbnail" alt="">
+        <hr>
+        <!-- <div class="row">
+        <h3>{{project.title}}</h3>
+        <hr>
+        <p>{{project.project_description}}</p>
+        <hr> -->
+        <!-- <a type="button" class="btn btn-success btn-sm" href="{{project.link}}" value="view site"> -->
+        <!-- <a href="{{project.link}}" target="blank" class="btn btn-success btn-sm"> view site</a>
+        <p>Posted : {{project.posted}}</p>
+        </div> -->
+        <hr>
+    </div>
+    <hr>
+    <form action="{% url 'single_project' project.id%}" method="post">
+        {% csrf_token%}
+        {%bootstrap_form form layout='inline'%}
+        <input type="submit" class="btn btn-success btn-sm" value="Comment">
+    </form>
+    <hr>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            {%for comment in comments%}
+            <div class="well">
+                <p>{{comment.review}}</p>
+            </div>
+            {% endfor%}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock%}
+
+{% block scripts %} {{block.super}}
+<script type="text/javascript" src="{%static 'js/comment.js'%}"></script>
+{% endblock %}

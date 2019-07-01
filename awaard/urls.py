@@ -9,5 +9,7 @@ urlpatterns=[
     url(r'^profile/(\d+)', views.profile, name="profile"),
     # url(r'^search/', views.search_results, name='search_results')
     url(r'^api/projects/$',views.ProjectList.as_view()),
-    url(r"^new/project/$",views.new_project, name='new_project')
+    url(r"^new/project/$",views.new_project, name='new_project'),
+    url(r'^project/(\d+)',views.single_project, name="single_project"),
+    url(r'^ajax/comments/$',views.user_comment, name='user_comment'),
 ]

@@ -11,6 +11,7 @@ from .permissions import IsAdminOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import ProfileSerializer,ProjectSerializer,CommentSerializer
+from django.http import JsonResponse
 
 # @login_required(login_url='/accounts/login/')
 def landing_page(request):
@@ -61,12 +62,37 @@ def edit_profile(request):
 
     return render(request, "all-temps/edit_profile.html", {"form":form})
 
+@login_required(login_url='/accounts/login/')
+def single_project(request, project_id):
+    current_user = Profile.objects.get(username = request.user)
+    form = CommentForm()
+    project = Project.objects.get(id=project_id)
+    comments = project.comments.all()
 
+    try:
+        project = Project.objects.get(id=project_id)
+    except DoesNotExist:
+        raise Http404
 
+    # print(CommentForm)
+    # if request.method == "POST":
+    #     form = CommentForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         comment = form.save(commit=False)
+    #         comment.posted_by = request.user
 
+    #         comment.save()    
+    return render(request, "all-temps/project.html",{"project":project,"form":form,"comments":comments})
 
+def user_comment(request,project_id):
+    review = request.POST.get('review')
+    posted_by = request.user
+    project = Project.objects.get(id = project_id)
 
-
+    comment = Comment(review=review,posted_by=posted_by,project=project)
+    comment.save()
+    data = {'success':'You Have Successfully Reviewed The Project'}
+    return JsonResponse(data)
 
 
 
