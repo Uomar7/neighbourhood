@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     {% if title %}
     <title>{{ title }}</title>
@@ -23,8 +22,11 @@
 
 <body>
 
+    <div class="jumbotron">
+        <h2 class="text-center" style="font-family: 'Leckerli One', cursive;">AWAARDS</h2>
+    </div>
     {% include "navbar.html" %}
-    <div class="container">
+    <div class="container-fluid">
 
         {%block content%}
 

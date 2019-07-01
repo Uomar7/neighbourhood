@@ -12,13 +12,54 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import ProfileSerializer,ProjectSerializer,CommentSerializer
 
-@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
 def landing_page(request):
     projects = Project.objects.all()
     # project_comments = Project.objects.get(pk = id)
     # all_comments = project_comments.comments.all()
     return render(request, 'all-temps/index.html',{"projects":projects})
 
+@login_required(login_url='/accounts/login/')
+def new_project(request):
+    pass
+    current_user = request.user
+    if request.method == "POST":
+        form = ProjectForm(request.POST,request.FILES)
+        if form.is_valid():
+            proj = form.save(commit=False)
+            proj.profile = current_user
+            proj.save()
+        
+        return redirect(landing_page)
+    else:
+        form = ProjectForm()
+    return render(request,"all-temps/new_project.html",{"form":form})
+
+
+@login_required(login_url='/accounts/login/')
+def profile(request,id):
+    current_user = request.user
+    profile = Profile.objects.get(username=id)
+    projectz = profile.projects.all()
+    print(projectz)
+    return render(request, 'all-temps/profile.html',{"projectz":projectz,"profile":profile})
+
+@transaction.atomic
+def edit_profile(request):
+    current_user = request.user
+
+    return render(request, "all-temps/edit_profile.html")
+
+
+
+
+
+
+
+
+
+
+# Models APIView
 class ProjectList(APIView):
     permission_classes = (IsAdminOrReadOnly,)
 

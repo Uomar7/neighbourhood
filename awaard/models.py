@@ -15,12 +15,35 @@ class Profile(models.Model):
     def __str__(self):
         return self.first_name
 
+    def save_profile(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+
+
+    @classmethod
+    def get_profiles(cls):
+        all_profiles = cls.objects.all()
+        return all_profiles
+
+    @classmethod
+    def get_profile_by_id(cls, id):
+        profile = cls.objects.get(id= id)
+        return profile
+
+    @classmethod
+    def search_profile(cls, search_item):
+        sought_prof = cls.objects.filter(name__username= search_item)
+        return sought_prof
+
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
-    project_image = models.ImageField(upload_to='images/', default='award/media/images')
+    project_image = models.ImageField(upload_to='images/')
     project_description = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="projects")
     link = models.URLField()
     posted = models.DateTimeField(auto_now_add=True)
     # new column comments added below
@@ -29,6 +52,22 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+    def save_project(self):
+        self.save()
+
+    def delete_project(self):
+        self.delete()
+
+    @classmethod
+    def get_project(cls):
+        all_projects = cls.objects.all()
+        return all_projects
+
+    @classmethod
+    def get_project_by_id(cls, id):
+        project = cls.objects.get(id=id)
+        return project
+
 class Comment(models.Model):
     review = models.CharField(max_length=400)# automatically adds a new column on the project class called comments
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='comments')
@@ -36,6 +75,22 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.review
+
+    def save_comment(self):
+        self.save()
+
+    def delete_comment(self):
+        self.delete()
+
+    @classmethod
+    def get_comment(cls):
+        all_comments = cls.objects.all()
+        return all_comments
+
+    @classmethod
+    def get_comment_by_id(cls, id):
+        comment = cls.objects.get(id=id)
+        return comment
 
 CHOICES = (
     (1, '1'),

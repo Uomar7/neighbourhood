@@ -1,15 +1,13 @@
 {% extends 'base.html'%}
 {% load bootstrap4 %}
+{% load static%}
 <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css">
 
 {% block content %}
-<div class="jumbotron">
-    <h2>AWWAAARDS</h2>
-</div>
 
 {% if projects %}
 {% for project in projects %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
             <!-- Card Light -->
@@ -18,7 +16,7 @@
                 <!-- Card image -->
                 <div class="view overlay">
                     <img class="card-img-top"
-                        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%28131%29.jpg"
+                        src="{{ project.project_image.url }}"
                         alt="Card image cap">
                     <a>
                         <div class="mask rgba-white-slight"></div>
@@ -49,6 +47,10 @@
         </div>
     </div>
 </div>
+{% empty %}
+<h3 class="text-center">There Are No Posted Projects</h3>
+{% endfor %}
+{% endif%}
 {% endblock %}
 {% block scripts %} {{block.super}}
 <script type="text/javascript" src="{%static 'js/comment.js'%}"></script>
