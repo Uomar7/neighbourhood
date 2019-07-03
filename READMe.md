@@ -36,7 +36,13 @@ As a user, You will:
 
 ## Github pages
 
-Access the app files on my [github](https://github.com/Uomar7/instareplica.git)
+Access the app files on my [github](https://github.com/Uomar7)
+
+---
+
+## Awaards Site
+
+click to view site [here](https://oneawaard.herokuapp.com/)
 
 ---
 ### Installing
@@ -55,7 +61,7 @@ Access the app files on my [github](https://github.com/Uomar7/instareplica.git)
 4. On your terminal,Create database gallery using the command below.
 
 
-       CREATE DATABASE instaclone; 
+       CREATE DATABASE award; 
        **if you opt to use your own database name, replace instaclone your preferred name, then also update settings.py variable DATABASES > NAME
 
 5. Migrate the database using the command below
