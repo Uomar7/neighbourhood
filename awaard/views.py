@@ -29,7 +29,6 @@ def new_project(request):
         form = ProjectForm(request.POST,request.FILES)
         if form.is_valid():
             proj = form.save(commit=False)
-            # proj.user = current_user
             proj.profile = current_user
             proj.save()
         
@@ -66,7 +65,14 @@ def edit_profile(request):
 @login_required(login_url='/accounts/login/')
 def single_project(request, project_id):
     current_user = Profile.objects.get(username = request.user)
+    # all forms
+
     form = CommentForm()
+    design_form = DesignRateForm()
+    usability_form = UsabilityRateForm()
+    contentform = ContentRateForm()
+    # endforms
+    
     project = Project.objects.get(id=project_id)
     comments = project.comments.all()
 
@@ -75,37 +81,90 @@ def single_project(request, project_id):
     except DoesNotExist:
         raise Http404
 
-    # print(CommentForm)
-    # if request.method == "POST":
-    #     form = CommentForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         comment = form.save(commit=False)
-    #         comment.posted_by = request.user
+    if request.method == "POST":
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.posted_by = request.user
+            comment.project = project
 
-    #         comment.save()    
-    return render(request, "all-temps/project.html",{"project":project,"form":form,"comments":comments})
-
-def user_comment(request):
-    if request.method == 'POST':
-        comment_text = request.POST.get('the_post')
-        print(comment_text)
-        response_data = {}
-
-        comment = Comment(review=comment_text, posted_by=request.user)
-        comment.save()
-        response_data['pk'] = comment.pk
-        response_data['review'] = comment.review
-        response_data['posted_by'] = comment.posted_by
-
-        return HttpResponse(
-            json.dumps(response_data),
-            content_type = 'application/json'
-        )
+            comment.save()
+            return redirect('single_project', project_id)
     else:
-        return HttpResponse(
-            json.dumps({"nothing to seee":"Nothing is happening"}),
-            content_type = 'application/json'
-        )
+        form = CommentForm()
+
+# form for design rate.
+    if request.method == 'POST':
+        design_form = DesignRateForm(request.POST, request.FILES)
+        if design_form.is_valid():
+            des = design_form.save(commit = False)
+            des.voter = request.user
+            des.project = project
+
+            des.save()
+    
+    else:
+        design_form = DesignRateForm()
+
+# checking if the forms saves anything.
+
+    if request.method == 'POST':
+        contentform = ContentRateForm(request.POST, request.FILES)
+        if contentform.is_valid():
+            des = contentform.save(commit=False)
+            des.voter = request.user
+            des.project = project
+
+            des.save()
+        
+    else:
+        contentform = ContentRateForm()
+
+    if request.method == 'POST':
+        usability_form = UsabilityRateForm(request.POST, request.FILES)
+        if usability_form.is_valid():
+            des = usability_form.save(commit=False)
+            des.voter = request.user
+            des.project = project
+
+            des.save()
+
+    else:
+        usability_form = UsabilityRateForm()
+
+    design_total = project.design_rates.all()
+    print(design_total)
+    content_total = project.content_rates.all()
+    print(content_total)
+    usability_total = project.usability_rates.all()
+    print(usability_total)
+    # usability average
+    all = []
+    for item in list(usability_total):
+        all.append(int(item.rating))
+    
+    average_use = sum(all)/len(all)
+    use_total = str("{:.2f}".format(average_use))
+
+    # Design average
+    dall = []
+    for ite in list(design_total):
+        dall.append(int(ite.rating))
+    
+    average_des = sum(dall)/len(dall)
+    datall = str("{:.2f}".format(average_des))
+
+    # Content Average
+    call = []
+    for it in list(content_total):
+        call.append(int(it.rating))
+
+    average_con = sum(call)/len(call)
+    coll = str("{:.2f}".format(average_con))
+
+
+
+    return render(request, "all-temps/project.html",{"project":project,"form":form,"comments":comments,"useform":usability_form,"desform":design_form,"contform":contentform,"ct":coll,"dt":datall,"ut":use_total})
 
 # Models APIView
 class ProjectList(APIView):

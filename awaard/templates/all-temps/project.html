@@ -23,24 +23,69 @@
         </div> -->
         <hr>
     </div>
+</div>
+<hr>
+
+<div class="container" style="font-family: 'Leckerli One', cursive;">
+    <div class="row">
+        <div class="col-md-5">
+        
+            <h6> Content Rate</h6>
+            <form action="{% url 'single_project' project.id %}" method="post">
+                {% csrf_token%}
+                {%bootstrap_form contform layout='inline'%}
+                <input type="submit" class="btn btn-success btn-sm" value="Rate">
+            </form>
+            <hr>
+            <h6> Design Rate</h6>
+            <form action="{% url 'single_project' project.id %}" method="post">
+                {% csrf_token%}
+                {%bootstrap_form desform layout='inline'%}
+                <input type="submit" class="btn btn-success btn-sm" value="Rate">
+            </form>
+            <hr>
+            <h6> Usability Rate</h6>
+            <form action="{% url 'single_project' project.id %}" method="post">
+                {% csrf_token%}
+                {%bootstrap_form useform layout='inline'%}
+                <input type="submit" class="btn btn-success btn-sm" value="Rate">
+            </form>
+        </div>
+        <hr>
+        <div class="col-md-7">
+            <div class="header">
+                <h6 class="text-center">Ratings</h6>
+            </div>
+            <div class="body">
+                <p>Content Rating: {{ct}} </p>
+                <hr>
+                <p>Design Rating: {{dt}} </p>
+                <hr>
+                <p>Usability Rating: {{ut}}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <hr>
+     <div class="row">
+         <div class="col-md-2"></div>
+         <div class="col-md-8">
+             {%for comment in comments%}
+             <div class="well">
+                 <p>{{ comment.posted_by}}: {{comment.review}}</p>
+             </div>
+             {% endfor%}
+         </div>
+         <div class="col-md-2"></div>
+     </div>
     <hr>
     <form action="{% url 'single_project' project.id%}" id="form" method="post">
         {% csrf_token%}
         {%bootstrap_form form layout='inline'%}
         <input type="submit" class="btn btn-success btn-sm" value="Comment">
     </form>
+
     <hr>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            {%for comment in comments%}
-            <div class="well">
-                <p>{{comment.review}}</p>
-            </div>
-            {% endfor%}
-        </div>
-        <div class="col-md-2"></div>
-    </div>
 </div>
 {% endblock%}
 

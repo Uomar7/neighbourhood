@@ -12,5 +12,4 @@ urlpatterns=[
     url(r'^api/profile/$',views.ProfileList.as_view()),
     url(r"^new/project/$",views.new_project, name='new_project'),
     url(r'^project/(\d+)',views.single_project, name="single_project"),
-    url(r'^ajax/comments/$',views.user_comment, name='user_comment'),
 ]
