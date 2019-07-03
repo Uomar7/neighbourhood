@@ -68,7 +68,7 @@ class Project(models.Model):
         return project
 
 class Comment(models.Model):
-    review = models.CharField(max_length=400, blank=True) # automatically adds a new column on the project class called comments
+    review = models.CharField(max_length=400, blank=False) # automatically adds a new column on the project class called comments
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='comments')
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
 

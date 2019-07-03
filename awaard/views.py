@@ -128,43 +128,48 @@ def single_project(request, project_id):
             des.project = project
 
             des.save()
+            return redirect('single_project', project_id)
 
     else:
         usability_form = UsabilityRateForm()
 
     design_total = project.design_rates.all()
-    print(design_total)
     content_total = project.content_rates.all()
-    print(content_total)
     usability_total = project.usability_rates.all()
-    print(usability_total)
+
     # usability average
-    all = []
-    for item in list(usability_total):
-        all.append(int(item.rating))
+    # all = []
+    # for item in list(usability_total):
+    #     all.append(int(item.rating))
+    # if len(all) >= 1:
+    #     average_use = sum(all)/len(all)
+    #     return average_use
+
+    # use_total = str("{:.2f}".format(average_use))
+
+    # # Design average
+    # dall = []
+    # for ite in list(design_total):
+    #     dall.append(int(ite.rating))
+    # if len(dall) >= 1:
+    #     average_des = sum(dall)/len(dall)
+    #     return average_des
+
+    # datall = str("{:.2f}".format(average_des))
+
+    # # Content Average
+    # call = []
+    # for it in list(content_total):
+    #     call.append(int(it.rating))
+    # if len(call) >= 1 :
+    #     average_con = sum(call)/len(call)
+    #     return average_con
     
-    average_use = sum(all)/len(all)
-    use_total = str("{:.2f}".format(average_use))
-
-    # Design average
-    dall = []
-    for ite in list(design_total):
-        dall.append(int(ite.rating))
-    
-    average_des = sum(dall)/len(dall)
-    datall = str("{:.2f}".format(average_des))
-
-    # Content Average
-    call = []
-    for it in list(content_total):
-        call.append(int(it.rating))
-
-    average_con = sum(call)/len(call)
-    coll = str("{:.2f}".format(average_con))
+    # coll = str("{:.2f}".format(average_con))
 
 
 
-    return render(request, "all-temps/project.html",{"project":project,"form":form,"comments":comments,"useform":usability_form,"desform":design_form,"contform":contentform,"ct":coll,"dt":datall,"ut":use_total})
+    return render(request, "all-temps/project.html",{"project":project,"form":form,"comments":comments,"useform":usability_form,"desform":design_form,"contform":contentform})
 
 # Models APIView
 class ProjectList(APIView):

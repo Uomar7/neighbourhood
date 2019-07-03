@@ -9,18 +9,20 @@
 
 {% block content %}
 <div class="container" style="font-family: 'Leckerli One', cursive;">
+    <div class="row" style="margin-top: 1.3rem">
+        <div class="col-md-4">
+            <p>Content Rating: {{ct}} </p>
+        </div>
+        <div class="col-md-4">
+            <p>Design Rating: {{dt}} </p>
+        </div>
+        <div class="col-md-4">
+            <p>Usability Rating: {{ut}}</p>
+        </div>
+    </div>
     <div class="row" style="font-family: 'Leckerli One', cursive;">
+        <hr>
         <img src="{{ project.project_image.url }}" class="img-thumbnail" alt="">
-        <hr>
-        <!-- <div class="row">
-        <h3>{{project.title}}</h3>
-        <hr>
-        <p>{{project.project_description}}</p>
-        <hr> -->
-        <!-- <a type="button" class="btn btn-success btn-sm" href="{{project.link}}" value="view site"> -->
-        <!-- <a href="{{project.link}}" target="blank" class="btn btn-success btn-sm"> view site</a>
-        <p>Posted : {{project.posted}}</p>
-        </div> -->
         <hr>
     </div>
 </div>
@@ -28,44 +30,60 @@
 
 <div class="container" style="font-family: 'Leckerli One', cursive;">
     <div class="row">
-        <div class="col-md-5">
-        
+        <div class="col-md-4">
             <h6> Content Rate</h6>
-            <form action="{% url 'single_project' project.id %}" method="post">
-                {% csrf_token%}
-                {%bootstrap_form contform layout='inline'%}
-                <input type="submit" class="btn btn-success btn-sm" value="Rate">
-            </form>
-            <hr>
+                <form action="{% url 'single_project' project.id %}" method="post">
+                    {% csrf_token%}
+                    {%bootstrap_form contform layout='inline'%}
+                    <input type="submit" class="btn btn-success btn-sm" value="Rate">
+                </form>
+        </div>
+        <hr>
+        <div class="col-md-4">
             <h6> Design Rate</h6>
-            <form action="{% url 'single_project' project.id %}" method="post">
-                {% csrf_token%}
-                {%bootstrap_form desform layout='inline'%}
-                <input type="submit" class="btn btn-success btn-sm" value="Rate">
-            </form>
-            <hr>
+                <form action="{% url 'single_project' project.id %}" method="post">
+                    {% csrf_token%}
+                    {%bootstrap_form desform layout='inline'%}
+                    <input type="submit" class="btn btn-success btn-sm" value="Rate">
+                </form>
+        </div>
+        <hr>
+        <div class="col-md-4">
             <h6> Usability Rate</h6>
-            <form action="{% url 'single_project' project.id %}" method="post">
-                {% csrf_token%}
-                {%bootstrap_form useform layout='inline'%}
-                <input type="submit" class="btn btn-success btn-sm" value="Rate">
-            </form>
+                <form action="{% url 'single_project' project.id %}" method="post">
+                    {% csrf_token%}
+                    {%bootstrap_form useform layout='inline'%}
+                    <input type="submit" class="btn btn-success btn-sm" value="Rate">
+                </form>
         </div>
-        <hr>
-        <div class="col-md-7">
-            <div class="header">
-                <h6 class="text-center">Ratings</h6>
-            </div>
-            <div class="body">
-                <p>Content Rating: {{ct}} </p>
-                <hr>
-                <p>Design Rating: {{dt}} </p>
-                <hr>
-                <p>Usability Rating: {{ut}}</p>
-            </div>
-        </div>
-        <hr>
     </div>
+    <hr>
+   <div class="row">
+       <div class="panel">
+           <div class="panel-header">
+            <h4>
+                {{project.title}}
+            </h4>
+           </div>
+           <div class="panel-body">
+               
+               <p> Project Description: {{project.project_description}}</p>
+               <hr>
+               <p>Posted by {{project.profile}}</p>
+               <hr>
+               <p>{{project.posted}}</p> <a href="{{project.link}}" class="btn btn-success btn-sm">View Site</a>
+           </div>
+       </div>
+   </div>
+    <!-- <div class="row">
+        <h3>{{project.title}}</h3>
+        <hr>
+        <p>{{project.project_description}}</p>
+        <hr> -->
+    <!-- <a type="button" class="btn btn-success btn-sm" href="{{project.link}}" value="view site"> -->
+    <!-- <a href="{{project.link}}" target="blank" class="btn btn-success btn-sm"> view site</a>
+        <p>Posted : {{project.posted}}</p>
+        </div> -->
     <hr>
      <div class="row">
          <div class="col-md-2"></div>
