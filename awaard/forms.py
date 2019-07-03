@@ -20,12 +20,8 @@ class CommentForm(forms.ModelForm):
         model = Comment
         # exclude = ['posted_by', 'project']
         fields = ['review']
-        widget = {
-            'review': forms.TextInput(attrs={
-                'id': 'comment-text',
-                'required': True,
-                'placeholder': 'Write Your Remark'
-            })
+        widgets = {
+            'placeholder':'Write Your Review'
         }
 
 
@@ -33,15 +29,24 @@ class UsabilityRateForm(forms.ModelForm):
     class Meta:
         model = UsabilityRate
         fields = ['rating']
+        widgets = {
+            'placeholder':'Usability rate'
+        }
 
 
 class DesignRateForm(forms.ModelForm):
     class Meta:
         model = DesignRate
         fields = ['rating']
+        widgets = {
+            'placeholder': 'Design rate'
+        }
 
 
 class ContentRateForm(forms.ModelForm):
     class Meta:
         model = ContentRate
         fields = ['rating']
+        widgets = {
+            'label': 'Content rate'
+        }
