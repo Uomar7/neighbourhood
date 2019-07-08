@@ -67,8 +67,8 @@ class Post(models.Model):
 
 class Neighbourhood(models.Model):
     name = models.CharField(max_length = 40)
-    created  = models.Foreignkey(User)
-    member = models.Foreignkey(Profile)
+    created  = models.ForeignKey(User, on_delete=models.CASCADE)
+    member = models.ForeignKey(Profile)
 
     def __str__(self):
         return self.name
@@ -89,8 +89,8 @@ class Business(models.Model):
     name = models.CharField(max_length = 80)
     police = models.CharField(max_length = 80)
     health = models.CharField(max_length = 80)
-    p.no = models.CharField(max_length = 20)
-    h.no = models.CharField(max_length = 20)
+    p_no = models.CharField(max_length = 20)
+    h_no = models.CharField(max_length = 20)
     location = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -109,7 +109,7 @@ class Business(models.Model):
     
 class Comment(models.Model):
     review = models.CharField(max_length=400, blank=False) # automatically adds a new column on the project class called comments
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -62,7 +62,7 @@ def edit_profile(request):
     return render(request, "all-temps/edit_profile.html", {"form":form})
 
 @login_required(login_url='/accounts/login/')
-def single_project(request, post_id):
+def single_post(request, post_id):
     current_user = Profile.objects.get(username = request.user)
     # all forms
     form = CommentForm()

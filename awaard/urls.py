@@ -10,6 +10,6 @@ urlpatterns=[
     # url(r'^search/', views.search_results, name='search_results')
     url(r'^api/projects/$',views.ProjectList.as_view()),
     url(r'^api/profile/$',views.ProfileList.as_view()),
-    url(r"^new/project/$",views.new_project, name='new_project'),
-    url(r'^project/(\d+)',views.single_project, name="single_project"),
+    url(r"^new/project/$",views.new_post, name='new_post'),
+    url(r'^project/(\d+)',views.single_post, name="single_post"),
 ]
