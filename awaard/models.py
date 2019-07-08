@@ -6,8 +6,8 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-    first_name = models.CharField(max_length=40)
-    last_name = models.CharField(max_length=40)
+    fname = models.CharField(max_length=40)
+    lname = models.CharField(max_length=40)
     username = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     profile_pic = models.ImageField(upload_to='images/', blank=True)
@@ -67,9 +67,12 @@ class Post(models.Model):
 
 class Neighbourhood(models.Model):
     name = models.CharField(max_length = 40)
-    created  = models.ForeignKey(User, on_delete=models.CASCADE)
-    member = models.ForeignKey(Profile)
-
+    member = models.ForeignKey(Profile, null = True, related_name="neighbourhoods")
+    police = models.CharField(max_length=80)
+    health = models.CharField(max_length=80)
+    p_no = models.CharField(max_length=20)
+    h_no = models.CharField(max_length=20)
+    
     def __str__(self):
         return self.name
     
@@ -87,10 +90,6 @@ class Neighbourhood(models.Model):
 class Business(models.Model):
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length = 80)
-    police = models.CharField(max_length = 80)
-    health = models.CharField(max_length = 80)
-    p_no = models.CharField(max_length = 20)
-    h_no = models.CharField(max_length = 20)
     location = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
 
     def __str__(self):

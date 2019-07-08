@@ -24,7 +24,7 @@
 
             <div class="col-md-8">
                 <h3>Username: {{ profile.username }}</h3>
-                <p>Fullname: {{profile.first_name}} {{profile.last_name}}</p>
+                <p>Fullname: {{profile.fname}} {{profile.lname}}</p>
                 <hr>
                 <p>Bio: {{ profile.bio }}</p>
                 <hr>
@@ -39,7 +39,7 @@
 
         
         <div class="row">
-            {% for project in projectz %}
+            {% for project in postz %}
             
             <div class="col-md-4">
                 <div class="card">
@@ -77,7 +77,7 @@
             <hr>
 
             {% empty %}
-            <p> No Projects Posted </p>
+            <p> No Posts Posted </p>
             {% endfor %}
             
         </div>
