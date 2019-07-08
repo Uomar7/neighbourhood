@@ -3,13 +3,14 @@
 {% load static %}
 
 {% block styles%}
+<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Nixie+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 {% endblock %}
 
 <div class="container">
     {% block content %}
-    <div class="container" style="font-family: 'Leckerli One', cursive;">
+    <div class="container" style="font-family: 'Nixie One',cursive;">
         {% if profile %}
 
         <div class="row">
@@ -66,7 +67,7 @@
                         card's content.</p> -->
                         <!-- Link -->
                         <a href="/project/{{project.id}}" class="black-text d-flex justify-content-end">
-                            <h5>Rate Project <i class="fas fa-angle-double-right"></i></h5>
+                            <h5>View Posts <i class="fas fa-angle-double-right"></i></h5>
                         </a>
 
                     </div>
