@@ -24,10 +24,8 @@
                 <div class="panel-body">
                     <form action="/accounts/register/" method="post">
 
-                        {% csrf_token %}]
-
-                        {% bootstrap_form form layout='inline' %}
-
+                        {% csrf_token %}
+                        {% bootstrap_form form layout='inline'%}
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
                         </div>

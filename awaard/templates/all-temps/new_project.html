@@ -9,11 +9,11 @@
 
 {% block content %}
     <div class="container" style="font-family: 'Leckerli One', cursive;">
-    <form action="{%url 'new_project'%}" method="post" enctype="multipart/form-data">
+    <form action="{%url 'new_post'%}" method="post" enctype="multipart/form-data">
         {%csrf_token%}
 
         {% bootstrap_form form layout='inline'%}
-        <input type="submit" class="btn btn-success btn-lg" value="Post">
+        <input type="submit" class="btn btn-success btn-sm" value="Post">
     </form>
 </div>
     {% endblock%}

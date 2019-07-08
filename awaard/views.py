@@ -21,16 +21,17 @@ def landing_page(request):
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):
-
     current_user =Profile.objects.get(username=request.user)
+    loc = Neighbourhood.objects.get(member=current_user )
     if request.method == "POST":
         form = PostForm(request.POST,request.FILES)
         if form.is_valid():
             proj = form.save(commit=False)
-            proj.profile = current_user
+            proj.post = current_user
+            proj.neigh = loc
             proj.save()
         
-        return redirect(landing_page)
+        return redirect(hood, loc.id)
     else:
         form = PostForm()
     return render(request,"all-temps/new_project.html",{"form":form})
@@ -73,10 +74,10 @@ def new_biz(request):
             biz.owner = request.user
             biz.location = loc 
             biz.save()
-            return redirect('hood',)
+            return redirect('hood', loc.id)
     else:
         form = BusinessForm()
-    return render(request, "all_temps/new_biz.html", {"form":form})
+    return render(request, "all-temps/new_biz.html", {"form":form})
 
 @login_required(login_url="/accounts/login/")
 def new_hood(request):
@@ -92,17 +93,19 @@ def new_hood(request):
             return redirect('hood',neigh.id)
     else:
         form = NeighbourhoodForm()
-    return render(request, "all_temps/new_hood.html",{"form":form})
+    return render(request, "all-temps/new_hood.html",{"form":form})
 
 @login_required(login_url = "/accounts/login/")
 def join_hood(request):
     hoods = Neighbourhood.objects.all()
-    return render(request, "all_temps/j_hood.html",{"hoods":hoods})
+    return render(request, "all-temps/j_hood.html",{"hoods":hoods})
 
 @login_required(login_url="/accounts/login/")
 def hood(request,id):
     hood = Neighbourhood.objects.get(id = id)
-    return render(request, "all_temps/hood.html",{"hood":hood})
+    posts = hood.posts.all()
+    
+    return render(request, "all-temps/hood.html",{"hood":hood,"posts":posts})
 
 @login_required(login_url='/accounts/login/')
 def single_post(request, post_id):
@@ -122,10 +125,10 @@ def single_post(request, post_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.posted_by = request.user
-            comment.post = post.id
+            comment.post = post
 
             comment.save()
-            return redirect('single_project', post_id)
+            return redirect('single_post', post_id)
     else:
         form = CommentForm()
 

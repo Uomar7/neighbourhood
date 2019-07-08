@@ -1,0 +1,25 @@
+.jumbotron{
+    width: 100%;
+    height: 50%;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url('https://media-public.canva.com/MADaq5GfkCE/1/screen_2x.jpg');
+}
+.jumbotron h4{
+    text-align: center;
+    justify-content: center;
+    font-family: 'Jockey One', sans-serif;
+    font-size: 7rem;
+}
+.container-fluid{
+    font-family: 'Saira Extra Condensed', sans-serif;
+    letter-spacing: 1px;
+}
+.row{
+    margin-bottom: 1.5rem;
+}
+#row1,#row2{
+    margin-left: 2rem;
+}

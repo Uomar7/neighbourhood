@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block styles%}
+{% bootstrap_css %}
+<link rel="stylesheet" href="{% url static 'css/jh.css'%}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% endblock %}
+<body>
+    {% block content %}
+    <main>
+        <div class="container">
+            {% for hood in hoods %}
+            <p><a href="{% url 'hood' hood.id %}">{{ hood.name}}</a></p><br>
+            {% empty %}
+
+            <p>No Neighbourhood Yet</p>
+            <p>Create One <a href="{% url 'new_hood' %}">Here</a></p>
+            {% endfor%}
+        </div>
+    </main>
+    {% endblock%}
+</body>

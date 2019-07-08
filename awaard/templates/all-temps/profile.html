@@ -28,7 +28,7 @@
                 <hr>
                 <p>Bio: {{ profile.bio }}</p>
                 <hr>
-                <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-sm">Edit Profile</a>
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-sm">Edit Profile</a> <a class="btn btn-primary btn-sm" href="{% url 'new_biz'%}"> Create Biz</a>
                 <hr>
 
                 
@@ -47,7 +47,7 @@
                     <!-- Card image -->
                     <div class="view overlay">
                         <img class="card-img-top" height="250 !important" width="auto"
-                            src="{{ project.project_image.url }}" alt="Card image cap">
+                            src="{{ project.post_image.url }}" alt="Card image cap">
                         <a>
                             <div class="mask rgba-white-slight"></div>
                         </a>
