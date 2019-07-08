@@ -38,12 +38,11 @@ class Profile(models.Model):
         return sought_prof
 
 
-class Project(models.Model):
+class Post(models.Model):
     title = models.CharField(max_length=100)
-    project_image = models.ImageField(upload_to='images/')
-    project_description = models.TextField()
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="projects")
-    link = models.URLField()
+    post_image = models.ImageField(upload_to='images/')
+    post_description = models.TextField()
+    post = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="posts")
     posted = models.DateTimeField(auto_now_add=True)
     # new column comments added below
     # new column called usabilityrate
@@ -51,25 +50,65 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
-    def save_project(self):
+    def save_post(self):
         self.save()
 
-    def delete_project(self):
+    def delete_post(self):
         self.delete()
 
     @classmethod
-    def get_project(cls):
-        all_projects = cls.objects.all()
+    def get_post(cls):
+        all_posts = cls.objects.all()
         return all_projects
 
     @classmethod
-    def get_project_by_id(cls, id):
+    def get_post_by_id(cls, id):
         project = cls.objects.get(id=id)
         return project
 
+class Neighbourhood(models.Model):
+    name = models.CharField(max_length = 40)
+    created  = models.Foreignkey(User)
+    member = models.Foreignkey(Profile)
+
+    def __str__(self):
+        return self.name
+    
+    def save_neighbourhood(self):
+        self.save()
+
+    def delete_neighbourhood(self):
+        self.delete()
+
+    @classmethod
+    def get_all_neighbourhoods(cls):
+        all_neighbourhoods = cls.objects.all()
+
+class Business(models.Model):
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
+    name = models.CharField(max_length = 80)
+    police = models.CharField(max_length = 80)
+    health = models.CharField(max_length = 80)
+    p.no = models.CharField(max_length = 20)
+    h.no = models.CharField(max_length = 20)
+    location = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+    
+    def save_business(self):
+        self.save()
+
+    def delete_business(self):
+        self.delete()
+
+    @classmethod
+    def get_all_(cls):
+        all_ = cls.objects.all()
+    
 class Comment(models.Model):
     review = models.CharField(max_length=400, blank=False) # automatically adds a new column on the project class called comments
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -91,46 +130,6 @@ class Comment(models.Model):
         comment = cls.objects.get(id=id)
         return comment
 
-CHOICES = (
-    (0,'0'),
-    (1, '1'),
-    (2, '2'),
-    (3, '3'),
-    (4, '4'),
-    (5, '5'),
-    (6, '6'),
-    (7, '7'),
-    (8, '8'),
-    (9, '9'),
-    (10, '10')
-)
-
-class DesignRate(models.Model):
-    project = models.ForeignKey(Project,related_name='design_rates')
-    voted_at = models.DateTimeField(auto_now_add=True)
-    voter = models.ForeignKey(User)
-    rating = models.IntegerField(default=0, choices=CHOICES, null=True)
-
-    def __str__(self):
-        return str(self.rating)
-
-class ContentRate(models.Model):
-    project = models.ForeignKey(Project,related_name='content_rates')
-    voted_at = models.DateTimeField(auto_now_add=True)
-    voter = models.ForeignKey(User)
-    rating = models.IntegerField(default=0, choices=CHOICES, null=True)
-
-    def __str__(self):
-        return str(self.rating)
-
-class UsabilityRate(models.Model):
-    project = models.ForeignKey(Project,related_name='usability_rates')
-    voted_at = models.DateTimeField(auto_now_add=True)
-    voter = models.ForeignKey(User)
-    rating = models.IntegerField(default = 0,choices=CHOICES, null=True)
-
-    def __str__(self):
-        return str(self.rating)
 
     
 

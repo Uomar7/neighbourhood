@@ -22,11 +22,11 @@ def landing_page(request):
     return render(request, 'all-temps/index.html',{"projects":projects})
 
 @login_required(login_url='/accounts/login/')
-def new_project(request):
+def new_post(request):
 
     current_user =Profile.objects.get(username=request.user)
     if request.method == "POST":
-        form = ProjectForm(request.POST,request.FILES)
+        form = PostForm(request.POST,request.FILES)
         if form.is_valid():
             proj = form.save(commit=False)
             proj.profile = current_user
@@ -34,7 +34,7 @@ def new_project(request):
         
         return redirect(landing_page)
     else:
-        form = ProjectForm()
+        form = PostForm()
     return render(request,"all-temps/new_project.html",{"form":form})
 
 
