@@ -10,16 +10,23 @@
 .jumbotron h4{
     text-align: center;
     justify-content: center;
-    font-family: 'Jockey One', sans-serif;
+    font-weight: bolder;
     font-size: 7rem;
+    font-family: 'Cinzel Decorative',
+    cursive;
 }
 .container-fluid{
-    font-family: 'Saira Extra Condensed', sans-serif;
+    font-family: 'Nixie One',cursive;
     letter-spacing: 1px;
+    font-weight: bolder;
 }
 .row{
     margin-bottom: 1.5rem;
 }
 #row1,#row2{
     margin-left: 2rem;
+}
+#ref{
+    margin-left: 2rem;
+    margin-bottom: 2rem;
 }

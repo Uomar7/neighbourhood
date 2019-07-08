@@ -3,8 +3,7 @@
 {% load static%}
 {% block styles%}
 {% bootstrap_css %}
-<link href="https://fonts.googleapis.com/css?family=Aguafina+Script|Alef|Cinzel+Decorative|Khand|Saira+Extra+Condensed|Squada+One&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Aguafina+Script|Alef|Cinzel+Decorative|Jockey+One|Squada+One|Staatliches|Ultra&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Nixie+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css">
 {% endblock %}
 
@@ -12,7 +11,8 @@
 <div class="jumbotron">
     <h4>{{hood.name}}</h4>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" style="font-family: 'Nixie One',
+    cursive;">
     <div class="row">
         <div class="col-md-8">
             {%for post in posts%}
@@ -76,6 +76,19 @@
                 </div>
             </div>
 
+            <a id="ref" href="{%url 'new_post'%}" >Add Post</a>
+
+            {% for biz in biziz%}
+            <div id="row2" class="row">
+                <div class="card">
+                    <h5 class="card-header">{{biz.name}}</h5>
+                    <div class="card-body">
+                        <p class="card-text">Business contact: {{biz.email}}</p>
+                        <p class="card-text">Owner: {{biz.owner}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

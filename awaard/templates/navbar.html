@@ -4,11 +4,11 @@
 {% block styles%}
 {% bootstrap_css %}
 <link rel="stylesheet" href="{% static 'css/navbar.css'%}">
-<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Leckerli+One|Merienda|Oleo+Script&display=swap"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Nixie+One&display=swap" rel="stylesheet">
+
 {% endblock %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-family: 'Leckerli One', cursive;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-family: 'Nixie One',cursive;">
     <a class="navbar-brand" href="{% url 'home'%}">NEIGHBOURHOOD</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +22,7 @@
                 <a class="nav-link" href="{% url 'profile' request.user.id %}">Profile</a>
             </li>
             <li>
-                <a class="nav-link" href="{% url 'new_post' %}">Submit Project</a>
+                <a class="nav-link" href="{% url 'new_post' %}">Add Post</a>
             </li>
             <li>
                 <a class="nav-link" href="{% url 'home'%}"> leave Neighbourhood</a>
