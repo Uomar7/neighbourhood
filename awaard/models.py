@@ -59,12 +59,11 @@ class Post(models.Model):
     @classmethod
     def get_post(cls):
         all_posts = cls.objects.all()
-        return all_projects
-
+        return all_posts
     @classmethod
     def get_post_by_id(cls, id):
-        project = cls.objects.get(id=id)
-        return project
+        post = cls.objects.get(id=id)
+        return post
 
 class Neighbourhood(models.Model):
     name = models.CharField(max_length = 40)
@@ -83,6 +82,7 @@ class Neighbourhood(models.Model):
     @classmethod
     def get_all_neighbourhoods(cls):
         all_neighbourhoods = cls.objects.all()
+        return all_neighbourhoods
 
 class Business(models.Model):
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -103,8 +103,9 @@ class Business(models.Model):
         self.delete()
 
     @classmethod
-    def get_all_(cls):
-        all_ = cls.objects.all()
+    def get_all_businesses(cls):
+        all_businesses = cls.objects.all()
+        return all_businesses
     
 class Comment(models.Model):
     review = models.CharField(max_length=400, blank=False) # automatically adds a new column on the project class called comments

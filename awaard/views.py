@@ -3,22 +3,20 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 import datetime as dt
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Project, Comment, UsabilityRate, ContentRate, DesignRate
-from .forms import ProfileForm, CommentForm, ProjectForm, UsabilityRateForm,ContentRateForm,DesignRateForm
+from .models import Profile, Post, Comment, Neighbourhood, Business
+from .forms import ProfileForm, CommentForm, PostForm, NeighbourhoodForm, BusinessForm
 from django.contrib.auth.models import User
 # creating an api view for my models.
 from .permissions import IsAdminOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializer import ProfileSerializer,ProjectSerializer,CommentSerializer
-from django.http import JsonResponse
+from .serializer import ProfileSerializer,PostSerializer,CommentSerializer, BusinessSerializer, NeighbourhoodSerializer
 from rest_framework import status
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def landing_page(request):
-    projects = Project.objects.all()
-    # project_comments = Project.objects.get(pk = id)
-    # all_comments = project_comments.comments.all()
+    posts = Post.objects.all()
+
     return render(request, 'all-temps/index.html',{"projects":projects})
 
 @login_required(login_url='/accounts/login/')
@@ -42,9 +40,10 @@ def new_post(request):
 def profile(request,id):
     current_user = request.user
     profile = Profile.objects.get(username=id)
-    projectz = profile.projects.all()
-    print(projectz)
-    return render(request, 'all-temps/profile.html',{"projectz":projectz,"profile":profile})
+    postz = profile.posts.all()
+
+    
+    return render(request, 'all-temps/profile.html',{"postz":postz,"profile":profile})
 
 @transaction.atomic
 def edit_profile(request):
@@ -63,21 +62,15 @@ def edit_profile(request):
     return render(request, "all-temps/edit_profile.html", {"form":form})
 
 @login_required(login_url='/accounts/login/')
-def single_project(request, project_id):
+def single_project(request, post_id):
     current_user = Profile.objects.get(username = request.user)
     # all forms
-
     form = CommentForm()
-    design_form = DesignRateForm()
-    usability_form = UsabilityRateForm()
-    contentform = ContentRateForm()
-    # endforms
-    
-    project = Project.objects.get(id=project_id)
-    comments = project.comments.all()
+    post = Post.objects.get(id=post_id)
+    comments = post.comments.all()
 
     try:
-        project = Project.objects.get(id=project_id)
+        post = Post.objects.get(id=post_id)
     except DoesNotExist:
         raise Http404
 
@@ -86,103 +79,27 @@ def single_project(request, project_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.posted_by = request.user
-            comment.project = project
+            comment.post = post.id
 
             comment.save()
-            return redirect('single_project', project_id)
+            return redirect('single_project', post_id)
     else:
         form = CommentForm()
 
-# form for design rate.
-    if request.method == 'POST':
-        design_form = DesignRateForm(request.POST, request.FILES)
-        if design_form.is_valid():
-            des = design_form.save(commit = False)
-            des.voter = request.user
-            des.project = project
-
-            des.save()
-    
-    else:
-        design_form = DesignRateForm()
-
-# checking if the forms saves anything.
-
-    if request.method == 'POST':
-        contentform = ContentRateForm(request.POST, request.FILES)
-        if contentform.is_valid():
-            des = contentform.save(commit=False)
-            des.voter = request.user
-            des.project = project
-
-            des.save()
-        
-    else:
-        contentform = ContentRateForm()
-
-    if request.method == 'POST':
-        usability_form = UsabilityRateForm(request.POST, request.FILES)
-        if usability_form.is_valid():
-            des = usability_form.save(commit=False)
-            des.voter = request.user
-            des.project = project
-
-            des.save()
-            return redirect('single_project', project_id)
-
-    else:
-        usability_form = UsabilityRateForm()
-
-    design_total = project.design_rates.all()
-    content_total = project.content_rates.all()
-    usability_total = project.usability_rates.all()
-
-    # usability average
-    # all = []
-    # for item in list(usability_total):
-    #     all.append(int(item.rating))
-    # if len(all) >= 1:
-    #     average_use = sum(all)/len(all)
-    #     return average_use
-
-    # use_total = str("{:.2f}".format(average_use))
-
-    # # Design average
-    # dall = []
-    # for ite in list(design_total):
-    #     dall.append(int(ite.rating))
-    # if len(dall) >= 1:
-    #     average_des = sum(dall)/len(dall)
-    #     return average_des
-
-    # datall = str("{:.2f}".format(average_des))
-
-    # # Content Average
-    # call = []
-    # for it in list(content_total):
-    #     call.append(int(it.rating))
-    # if len(call) >= 1 :
-    #     average_con = sum(call)/len(call)
-    #     return average_con
-    
-    # coll = str("{:.2f}".format(average_con))
-
-
-
-    return render(request, "all-temps/project.html",{"project":project,"form":form,"comments":comments,"useform":usability_form,"desform":design_form,"contform":contentform})
+    return render(request, "all-temps/project.html",{"post":post,"form":form,"comments":comments})
 
 # Models APIView
 class ProjectList(APIView):
     permission_classes = (IsAdminOrReadOnly,)
 
     def get(self, request, format=None):
-        all_projects = Project.objects.all()
-        serializers = ProjectSerializer(all_projects, many=True)
+        all_posts = Post.objects.all()
+        serializers = PostSerializer(all_posts, many=True)
 
         return Response(serializers.data)
     
     def post(self, request, format=None):
-        serializers = ProjectSerializer(data = request.data)
+        serializers = PostSerializer(data = request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
@@ -224,19 +141,19 @@ class CommentList(APIView):
 
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ProjectDescription(APIView):
+class PostDescription(APIView):
     permission_classes = (IsAdminOrReadOnly,)
 
-    def get_project(self, pk):
+    def get_post(self, pk):
         try:
-            return Project.objects.get(pk = pk)
+            return Post.objects.get(pk = pk)
         
-        except Project.DoesNotExist:
+        except Post.DoesNotExist:
             return Http404
     
     def put(self, request, pk, format=None):
-        project = self.get_project(pk)
-        serializers = ProjectSerializer(project, request.data)
+        post = self.get_post(pk)
+        serializers = PostSerializer(post, request.data)
 
         if serializers.is_valid():
             serializers.save()
@@ -245,8 +162,8 @@ class ProjectDescription(APIView):
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        project = self.get_project(pk)
-        project.delete()
+        post = self.get_post(pk)
+        post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
