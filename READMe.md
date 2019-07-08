@@ -61,7 +61,7 @@ click to view site [here](https://oneawaard.herokuapp.com/)
 4. On your terminal,Create database gallery using the command below.
 
 
-       CREATE DATABASE award; 
+       CREATE DATABASE neigh; 
        **if you opt to use your own database name, replace instaclone your preferred name, then also update settings.py variable DATABASES > NAME
 
 5. Migrate the database using the command below
