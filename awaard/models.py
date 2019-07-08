@@ -13,7 +13,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to='images/', blank=True)
 
     def __str__(self):
-        return self.first_name
+        return self.fname
 
     def save_profile(self):
         self.save()
@@ -44,6 +44,7 @@ class Post(models.Model):
     post_description = models.TextField()
     post = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="posts")
     posted = models.DateTimeField(auto_now_add=True)
+    neigh = models.ForeignKey('Neighbourhood', related_name='posts')
     # new column comments added below
     # new column called usabilityrate
 
@@ -72,7 +73,7 @@ class Neighbourhood(models.Model):
     health = models.CharField(max_length=80)
     p_no = models.CharField(max_length=20)
     h_no = models.CharField(max_length=20)
-    
+
     def __str__(self):
         return self.name
     
@@ -91,6 +92,7 @@ class Business(models.Model):
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length = 80)
     location = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
+    email = models.EmailField()
 
     def __str__(self):
         return self.name
