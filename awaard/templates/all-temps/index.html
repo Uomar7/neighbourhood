@@ -8,7 +8,7 @@
 {% if projects %}
 <div class="container-fluid" style="font-family: 'Leckerli One', cursive;">
     <div class="row">
-            {% for project in projects %}
+            {% for project in posts %}
         <div class="col-md-3">
             <!-- Card Light -->
             <div class="card">
@@ -39,7 +39,7 @@
                     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p> -->
                     <!-- Link -->
-                    <a href="{% url 'single_project' project.id %}" class="black-text d-flex justify-content-end">
+                    <a href="{% url 'single_post' project.id %}" class="black-text d-flex justify-content-end">
                         <h5>Read more <i class="fas fa-angle-double-right"></i></h5>
                     </a>
 

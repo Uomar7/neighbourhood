@@ -17,7 +17,7 @@ from rest_framework import status
 def landing_page(request):
     posts = Post.objects.all()
 
-    return render(request, 'all-temps/index.html',{"projects":projects})
+    return render(request, 'all-temps/index.html',{"posts":posts})
 
 @login_required(login_url='/accounts/login/')
 def new_post(request):
@@ -61,6 +61,49 @@ def edit_profile(request):
 
     return render(request, "all-temps/edit_profile.html", {"form":form})
 
+@login_required(login_url = "/accounts/login/")
+def new_biz(request):
+    profile = Profile.objects.get(username = request.user)
+    loc = Neighbourhood.objects.get(member = profile)
+
+    if request.method == "POST":
+        form = BusinessForm(request.POST,request.FILES)
+        if form.is_valid():
+            biz = form.save(commit=False)
+            biz.owner = request.user
+            biz.location = loc 
+            biz.save()
+            return redirect('hood',)
+    else:
+        form = BusinessForm()
+    return render(request, "all_temps/new_biz.html", {"form":form})
+
+@login_required(login_url="/accounts/login/")
+def new_hood(request):
+    current_user = request.user
+    profile = Profile.objects.get(username = current_user)
+    if request.method == "POST":
+        form = NeighbourhoodForm(request.POST,request.FILES)
+        if form.is_valid():
+            neigh = form.save(commit=False)
+            neigh.member = profile
+            neigh.save()
+
+            return redirect('hood',neigh.id)
+    else:
+        form = NeighbourhoodForm()
+    return render(request, "all_temps/new_hood.html",{"form":form})
+
+@login_required(login_url = "/accounts/login/")
+def join_hood(request):
+    hoods = Neighbourhood.objects.all()
+    return render(request, "all_temps/j_hood.html",{"hoods":hoods})
+
+@login_required(login_url="/accounts/login/")
+def hood(request,id):
+    hood = Neighbourhood.objects.get(id = id)
+    return render(request, "all_temps/hood.html",{"hood":hood})
+
 @login_required(login_url='/accounts/login/')
 def single_post(request, post_id):
     current_user = Profile.objects.get(username = request.user)
@@ -89,7 +132,7 @@ def single_post(request, post_id):
     return render(request, "all-temps/project.html",{"post":post,"form":form,"comments":comments})
 
 # Models APIView
-class ProjectList(APIView):
+class PostList(APIView):
     permission_classes = (IsAdminOrReadOnly,)
 
     def get(self, request, format=None):
