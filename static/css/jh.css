@@ -8,18 +8,37 @@ body{
     font-family: 'Cinzel Decorative', cursive;
     transform: translateY(40px);
     text-align: center;
-    font-size: 40px;
+    font-size: 100px;
     font-weight: bolder;
     margin: 2rem;
 }
 body h4{
-    margin-top: 4rem;
+    margin-top: 1rem;
     font-family: 'Cinzel Decorative', cursive;
     text-align: center;
+    font-weight: bolder;
+    font-size: 40px;
+    color: rgb(0, 0, 0);
 }
 p{
     text-align: center;
     font-family: 'Nixie One',
     cursive;
     font-weight: bolder;
+}
+
+.hoods {
+    color: black;
+    font-size: 25px;
+}
+
+.hoods:hover{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.neighbourhoods{
+    background: rgba(255, 255, 255, 0.12);
+    height: 60vh;
+    overflow-y: scroll;
 }

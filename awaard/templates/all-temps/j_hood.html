@@ -12,19 +12,19 @@
 <div class="container-fluid">
 <body>
     {% block content %}
-    <h3>Welcome To The Neighbourhoods</h3>
+    <h3>NeighbourhooD</h3>
 
-    {% for hood in hoods %}
-    <h4>All Available Neighbourhoods</h4>
-    <p><a href="{% url 'hood' hood.id %}">{{ hood.name}}</a></p><br>
-    {% empty %}
-    
-    <p>No Neighbourhood Yet</p>
-    <p>Create One <a href="{% url 'new_hood' %}">Here</a></p>
-    {% endfor%}
-    <div class="panel-default ">
-        <p>Create Neighbourhood <a href="{% url 'new_hood'%}">here</a> </p>
+    <div class="neighbourhoods">
+        <h4>Available Neighbourhoods</h4>
+        {% for hood in hoods %}
+        <p><a href="{% url 'hood' hood.id %}" class="hoods">{{ hood.name}}</a></p>
+        <!-- <p><a href="{% url 'new_hood' %}" class="btn btn-primary btn-sm">Add Hood</a></p> -->
+        {% empty %}
+        <p>No Neighbourhood Yet</p>
+        {% endfor%}
+        <p><a href="{% url 'new_hood' %}" class="btn btn-sm btn-primary">Add Hood</a></p>
     </div>
+    
     {% endblock%}
 </body>
 </div>
