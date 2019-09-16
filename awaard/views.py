@@ -100,7 +100,7 @@ def new_hood(request):
     return render(request, "all-temps/new_hood.html", {"form": form})
 
 
-@login_required(login_url="/accounts/login/")
+# @login_required(login_url="/accounts/login/")
 def join_hood(request):
     hoods = Neighbourhood.objects.all()
     return render(request, "all-temps/j_hood.html", {"hoods": hoods})
